@@ -1,8 +1,4 @@
-window.addEventListener('load', function () {
-    new FastClick(document.body);
-}, false);
-
-// The dynamically built HTML pages. In a real-life app, In a real-life app, use Handlerbar.js, Mustache.js or another template engine
+// The dynamically built HTML pages. In a real-life app, use Handlerbar.js, Mustache.js or another template engine
 var homePage =
     '<div>' +
         '<div class="header"><h1>Page Slider</h1></div>' +
@@ -28,8 +24,15 @@ var detailsPage =
     '</div>';
 
 
-var slider = new PageSlider($("#container"));
-$(window).on('hashchange', route);
+var slider = new PageSlider(document.getElementById('container'));
+window.addEventListener('hashchange', route);
+
+// Create a DOM element from plain HTML text
+function createDomElement(text) {
+    var element = document.createElement('div');
+    element.innerHTML = text;
+    return element.firstChild;
+}
 
 // Basic page routing
 function route(event) {
@@ -38,20 +41,16 @@ function route(event) {
 
     if (hash === "#page1") {
         page = merge(detailsPage, {img: "buildbot.jpg", name: "Build Bot", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."});
-//        slider.slide($(page), "right");
     } else if (hash === "#page2") {
         page = merge(detailsPage, {img: "medibot.jpg", name: "Medi Bot", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."});
-//        slider.slide($(page), "right");
     } else if (hash === "#page3") {
         page = merge(detailsPage, {img: "ripplebot.jpg", name: "Ripple Bot", description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."});
-//        slider.slide($(page), "right");
     }
     else {
         page = homePage;
-//        slider.slide($(homePage), "left");
     }
 
-    slider.slidePage($(page));
+    slider.slidePage(createDomElement(page));
 
 }
 
